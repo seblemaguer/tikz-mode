@@ -24,22 +24,24 @@
 
 ;;; Commentary:
 
-
 ;;; Code:
+
 (defun auctex-compilePGF-setup ()
   "Add LatexMk command to TeX-command-list."
-  (setq-default TeX-command-list  (cons
+  (setq-default TeX-file-extensions (append '("pgf" "tikz") TeX-file-extensions)
+                TeX-command-list  (cons
                                    '("CompilePGF" "compilePGF %t"
                                      TeX-run-command t (tikz-mode)
                                      :help "Run compilePGF to compile TIKZ/PGF like ktikz")
                                    TeX-command-list)))
 
-
+;; Link tikz-mode and auctex
 (define-derived-mode tikz-mode latex-mode "Tikz/PGF"
   "PGF/Tikz dedicated mode"
-  (setq-default TeX-file-extensions (append '("pgf" "tikz") TeX-file-extensions))
-  (auctex-compilePGF-setup))
+  (setq TeX-sentinel-default-function "CompilePGF"))
 
+;; Execute global configuration
+(auctex-compilePGF-setup)
 (add-to-list 'auto-mode-alist '("\\.\\(pgf\\|tikz\\)" . tikz-mode))
 
 (provide 'tikz-mode)
