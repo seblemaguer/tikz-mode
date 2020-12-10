@@ -26,6 +26,8 @@
 
 ;;; Code:
 
+(require 'tex)
+
 (defun auctex-compilePGF-setup ()
   "Add LatexMk command to TeX-command-list."
   (setq-default TeX-file-extensions (append '("pgf" "tikz") TeX-file-extensions)
